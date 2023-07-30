@@ -1,0 +1,55 @@
+<body>
+    <header class="header">
+        <div>
+            <h2 class="text_head">Nombre del sistema</h2>
+        </div>
+        <div class="header_sub">
+            <h2 class="text_head">Administrador</h2>
+            <div><button class="btn_primary btn_exit">Salir</button></div>
+        </div>
+    </header>
+    <main class="container">
+        <div class="container_menu">
+            <div class="contenedor_table">
+                <h2>Stock de Productos</h2>
+                <div class="container_menu_table">
+                    <div>
+                        <button class="btn_primary btn_user" id="print_pedido">Imprimir pedido</button>
+                        <button class="btn_primary btn_user export">Exportar stock de Producto</button>
+                    </div>
+                    <div>
+                        <input type="text" class="input_bus" placeholder="Buscar">
+                    </div>
+                </div>
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Producto(cambiar por el nombre)</th>
+                      <th>Codigo</th>
+                      <th>Cantidad</th>
+                      <th>Cantidad Minima</th>
+                      <th>Id de Tienda(cambiar por el nombre)</th>
+                      <th class="acc">Accion</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let producto of pageSlice">
+                      <td class="id_user_num">{{ producto.idProducto }}</td>
+                      <td>{{ producto.intId }}</td>
+                      <td>{{ producto.idProducto }}</td>
+                      <td>{{ producto.stock }}</td>
+                      <td>{{ producto.stockMinimo }}</td>
+                      <td>{{ producto.idTienda }}</td>
+                      <td class="btn_td acc">
+                      <button class="btn_editar" (click)="editarStock(producto)">Editar</button>
+                      <button class="btn_eliminar" (click)="eliminarStock(producto.intId)">Eliminar</button>
+                      </td>
+                    </tr>
+                    <mat-paginator [length]="this.productos.length" [pageSize]="10" (page)="Paginacion($event)"></mat-paginator>
+                  </tbody>
+
+                </table>
+            </div>
+        </div>
+    </main>
+</body>

@@ -1,0 +1,68 @@
+<body>
+    <header class="header">
+      <div>
+        <h2 class="text_head" routerLink="/pri">Inventario</h2>
+      </div>
+      <div class="header_sub">
+        <h2 class="text_head">Administrador</h2>
+        <div><button class="btn_primary btn_exit">Salir</button></div>
+      </div>
+    </header>
+    <main class="container">
+      <div class="modal">
+        <div class="modal-contenido">
+          <label for="" class="id_user_num">2</label>
+          <p>¿Estás seguro de eliminar este movimineto?</p>
+          <div class="modal-botones">
+            <button class="btn_confirmar">Sí</button>
+            <button class="btn_cancelar">No</button>
+          </div>
+        </div>
+      </div>
+      <div class="container_menu">
+        <div class="contenedor_table">
+          <h2>Lista de movimientos</h2>
+          <div class="container_menu_table">
+            <div>
+            </div>
+            <div>
+              <input type="text" class="input_bus" placeholder="Buscar">
+            </div>
+          </div>
+
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Tipo de Movimiento</th>
+                <th>Descripcion</th>
+                <th>Cantidad</th>
+                <th>Usuario</th>
+                <th>Id de Tienda</th>
+                <th class="acc">Accion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let movimiento of pageSlice">
+                <td class="id_user_num">{{ movimiento.idProducto }}</td>
+                <td>{{ movimiento.fecha }}</td>
+                <td>{{ movimiento.idProducto }}</td>
+                <td>{{ movimiento.tipoMovimiento }}</td>
+                <td>{{ movimiento.descripcion }}</td>
+                <td>{{ movimiento.cantidad }}</td>
+                <td>{{ movimiento.usuario }}</td>
+                <td>{{ movimiento.idTienda }}</td>
+                <td class="btn_td acc">
+                <button class="btn_editar" (click)="editarMovimiento(movimiento)">Editar</button>
+                <button class="btn_eliminar" (click)="eliminarMovimiento(movimiento.intId)">Eliminar</button>
+                </td>
+              </tr>
+              <mat-paginator [length]="this.Movimientos.length" [pageSize]="10" (page)="Paginacion($event)"></mat-paginator>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>

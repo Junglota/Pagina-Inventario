@@ -1,0 +1,96 @@
+<body>
+    <header class="header">
+      <div>
+        <h2 class="text_head" routerLink="">Inventario</h2>
+      </div>
+      <div class="header_sub">
+        <h2 class="text_head">Administrador</h2>
+        <div><button class="btn_primary btn_exit">Salir</button></div>
+      </div>
+    </header>
+    <main class="container">
+      <div class="modal-agregar">
+        <div class="modal-contenido-user">
+          <h2>Usuario Nuevo</h2>
+          <form id="addUserForm">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="apellido">Apellido:</label>
+              <input type="text" id="apellido" name="apellido" required>
+            </div>
+            <div class="form-group">
+              <label for="usuario">Usuario:</label>
+              <input type="text" id="usuario" name="usuario" required>
+            </div>
+            <div class="form-group">
+              <label for="correo">Correo:</label>
+              <input type="email" id="correo" name="correo" required>
+            </div>
+            <div class="form-group">
+              <label for="permiso">Permiso:</label>
+              <select id="permiso" name="permiso" required>
+                <option value="" disabled selected>-- Seleccione --</option>
+                <option value="1">Admin</option>
+                <option value="2">Propietario</option>
+                <option value="3">Empleado</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn_submit">Agregar</button>
+              <button type="button" class="btn_cancelar_user">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal">
+        <div class="modal-contenido">
+          <label for="" class="id_user_num">2</label>
+          <p>¿Estás seguro de eliminar el usuario <span class="user_span">Juan</span>?</p>
+          <div class="modal-botones">
+            <button class="btn_confirmar">Sí</button>
+            <button class="btn_cancelar">No</button>
+          </div>
+        </div>
+      </div>
+      <div class="container_menu">
+        <div class="contenedor_table">
+          <h2>Lista de usuarios</h2>
+          <div class="container_menu_table">
+            <div>
+              <button class="btn_primary btn_user btn_agregar" (click)="agregarUsuario()">Nuevo usuario</button>
+              <button class="btn_primary btn_user btn_agregar export">Exportar usuarios</button>
+            </div>
+            <div>
+              <input type="text" class="input_bus" placeholder="Buscar">
+            </div>
+          </div>
+          <div class="menu_tabla">
+            <a href="#" class="id_user">ID</a>
+            <a href="#">Nombre</a>
+            <a href="#">Apellido</a>
+            <a href="#">Usuario</a>
+            <a href="#">Correo</a>
+            <a href="#">Permiso</a>
+            <a href="#" class="acc">Acción</a>
+          </div>
+          <div class="table">
+            <div *ngFor="let user of usuarios; let i = index" class="list_table">
+                <label class="id_user_num">{{ user.id }}</label>
+                <label>{{ user.nombre }}</label>
+                <label>{{ user.apellido }}</label>
+                <label>{{ user.username }}</label>
+                <label>{{ user.correo }}</label>
+                <label>{{ getPermisoText(user.userType) }}</label>
+                <div class="btn_td acc">
+                  <button class="btn_editar" (click)="editarUsuario(user)">Editar</button>
+                  <button class="btn_eliminar" (click)="eliminarUsuario(user.intId)">Eliminar</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>

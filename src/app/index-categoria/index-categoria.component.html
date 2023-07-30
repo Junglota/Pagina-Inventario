@@ -1,0 +1,151 @@
+<body>
+    <header class="header">
+      <div>
+        <h2 class="text_head">Nombre del sistema</h2>
+      </div>
+      <div class="header_sub">
+        <h2 class="text_head">Administrador</h2>
+        <div><button class="btn_primary btn_exit">Salir</button></div>
+      </div>
+    </header>
+    <main class="container">
+      <div class="modal-agregar">
+        <div class="modal-contenido-user">
+          <label for="" class="id_user_num">2</label>
+          <h2>Nueva Categoria</h2>
+          <form>
+            <div class="form-group">
+              <label for="categoria">Categoria:</label>
+              <input type="text" id="categoria" name="categoria" required>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn_submit">Agregar</button>
+              <button type="button" class="btn_cancelar_user">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal">
+        <div class="modal-contenido">
+          <label for="" class="id_user_num">2</label>
+          <p>¿Estás seguro de eliminar esta categoria?</p>
+          <div class="modal-botones">
+            <button class="btn_confirmar">Sí</button>
+            <button class="btn_cancelar">No</button>
+          </div>
+        </div>
+      </div>
+      <div class="container_menu">
+        <div class="contenedor_table">
+          <h2>Categoria de Productos</h2>
+          <div class="container_menu_table">
+            <div>
+              <button class="btn_primary btn_user btn_agregar">Nueva categoria</button>
+              <button class="btn_primary btn_user export">Exportar categoria</button>
+            </div>
+            <div>
+              <input type="text" class="input_bus" placeholder="Buscar">
+            </div>
+          </div>
+          <div class="menu_tabla">
+            <a href="#">Fecha</a>
+            <a href="#">Categoria</a>
+            <a href="#" class="acc">Accion</a>
+          </div>
+          <div class="table">
+            <div class="list_table">
+              <label for="" class="id_user_num">2</label>
+              <label for="">20-2-2023</label>
+              <label for="">Fruta</label>
+              <div class="btn_td acc">
+                <button class="btn_editar cate">Editar</button>
+                <button class="btn_eliminar">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      var modalAgregar = document.querySelector('.modal-agregar');
+      // Obtener el elemento del botón "Editar"
+      var btnEditar = document.querySelector(".btn_editar");
+      // Agregar un evento de clic al botón "Editar"
+      btnEditar.addEventListener("click", function () {
+        modalAgregar.classList.add('mostrar');
+        // Obtener el elemento del título
+        var titulo = document.querySelector(".modal-contenido-user h2");
+        // Obtener el elemento del botón "Submit"
+        var btnSubmit = document.querySelector(".btn_submit");
+  
+        // Cambiar el texto del título
+        titulo.textContent = "Modificar categoria de Producto";
+        // Cambiar el texto del botón "Submit"
+        btnSubmit.textContent = "Actualizar";
+      });
+  
+      var btnEliminar = document.querySelector('.btn_eliminar');
+      var modal = document.querySelector('.modal');
+      var modal_cont = document.querySelector('.modal-contenido');
+      var btnConfirmar = document.querySelector('.btn_confirmar');
+      var btnCancelar = document.querySelector('.modal-contenido-user .btn_cancelar_user');
+      var btnClose = document.querySelector('.btn_cancelar');
+  
+      btnCancelar.addEventListener('click', function () {
+        modalAgregar.classList.remove('mostrar');
+      });
+      btnClose.addEventListener('click', function () {
+        modal.classList.remove('mostrar');
+      });
+  
+      // Lógica de eliminación del usuario
+      btnEliminar.addEventListener('click', function () {
+        modal.classList.add('mostrar');
+        modal_cont.classList.add('mostrar');
+      });
+  
+      btnConfirmar.addEventListener('click', function () {
+        alert('Categoria eliminada');
+        modal.classList.remove('mostrar');
+        modal_cont.classList.remove('mostrar');
+      });
+  
+      var btnAgregar = document.querySelector('.btn_agregar');
+      var modalAgregar = document.querySelector('.modal-agregar');
+      var btnCancelar = document.querySelector('.btn_cancelar_user');
+  
+      btnAgregar.addEventListener('click', function () {
+        modalAgregar.classList.add('mostrar');
+        // Obtener el elemento del título
+        var titulo = document.querySelector(".modal-contenido-user h2");
+        // Obtener el elemento del botón "Submit"
+        var btnSubmit = document.querySelector(".btn_submit");
+        // Cambiar el texto del título
+        titulo.textContent = "Nuevo Categoria";
+        // Cambiar el texto del botón "Submit"
+        btnSubmit.textContent = "Agregar";
+      });
+  
+      btnCancelar.addEventListener('click', function () {
+        modalAgregar.classList.remove('mostrar');
+      });
+  
+      // Obtener el elemento con la clase "btn_usuario"
+      var btnUsuario = document.querySelector('.text_head');
+  
+      // Agregar el evento de clic al elemento
+      btnUsuario.addEventListener('click', function () {
+        // Redireccionar al archivo "usuario.html"
+        window.location.href = 'dash.html';
+      });
+      // Obtener el elemento con la clase "btn_usuario"
+      var btnSalir = document.querySelector('.btn_exit');
+  
+      // Agregar el evento de clic al elemento
+      btnSalir.addEventListener('click', function () {
+        // Redireccionar al archivo "usuario.html"
+        window.location.href = 'index.html';
+      });
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  </body>

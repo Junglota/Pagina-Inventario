@@ -1,0 +1,98 @@
+<body>
+  <header class="header">
+    <div>
+      <h2 class="text_head" routerLink="/dash">Inventario</h2>
+    </div>
+    <div class="header_sub">
+      <h2 class="text_head">Administrador</h2>
+      <div><button class="btn_primary btn_exit">Salir</button></div>
+    </div>
+  </header>
+  <main class="container">
+    <div class="modal-agregar">
+      <div class="modal-contenido-user">
+        <label for="" class="id_user_num">2</label>
+        <h2>Nuevo Producto</h2>
+        <form id="addProductForm">
+          <div class="form-group">
+            <label for="Producto">Producto:</label>
+            <input type="text" id="Producto" name="Producto" required>
+          </div>
+          <div class="form-group">
+            <label for="Codigo">Codigo:</label>
+            <input type="text" id="Codigo" name="Codigo" required>
+          </div>
+          <div class="form-group">
+            <label for="Cantidad">Cantidad:</label>
+            <input type="text" id="Cantidad" name="Cantidad" required>
+          </div>
+          <div class="form-group">
+            <label for="Categoria">Categoria:</label>
+            <select id="Categoria" name="Categoria" required>
+              <option value="" disabled selected>-- Seleccione --</option>
+              <option value="Vegetales">Vegetales</option>
+              <option value="Enlatado">Enlatado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn_submit">Agregar</button>
+            <button type="button" class="btn_cancelar_user">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal">
+      <div class="modal-contenido">
+        <label for="" class="id_user_num">2</label>
+        <p>¿Estás seguro de eliminar este producto?</p>
+        <div class="modal-botones">
+          <button class="btn_confirmar">Sí</button>
+          <button class="btn_cancelar">No</button>
+        </div>
+      </div>
+    </div>
+    <div class="container_menu">
+      <div class="contenedor_table">
+        <h2>Lista de Productos</h2>
+        <div class="container_menu_table">
+          <div>
+            <button class="btn_primary btn_user btn_agregar" (click)="agregarProducto()">Nuevo Producto</button>
+            <button class="btn_primary btn_user btn_agregar export">Exportar Producto</button>
+          </div>
+          <div>
+            <input #box type="text" class="input_bus" placeholder="Buscar" (input)="buscarProductos(box.value)">
+          </div>
+        </div>
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th>Producto</th>
+              <th>Codigo</th>
+              <th>Categoria</th>
+              <th>Precio</th>
+              <th>Id de Tienda</th>
+              <th class="acc">Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of pageSlice">
+              <td class="id_user_num">{{ producto.idProducto }}</td>
+              <td>{{ producto.nombre }}</td>
+              <td>{{ producto.idProducto }}</td>
+              <td>{{ producto.categoria }}</td>
+              <td>{{ producto.precio }}</td>
+              <td>{{ producto.idTienda }}</td>
+              <td class="btn_td acc">
+              <button class="btn_editar" (click)="editarProducto(producto)">Editar</button>
+              <button class="btn_eliminar" (click)="eliminarProducto(producto.idProducto)">Eliminar</button>
+              </td>
+            </tr>
+            <mat-paginator [length]="this.productos.length" [pageSize]="10" (page)="Paginacion($event)"></mat-paginator>
+          </tbody>
+
+        </table>
+    </div>
+
+
+
+
