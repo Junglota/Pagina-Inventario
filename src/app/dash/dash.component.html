@@ -4,7 +4,7 @@
           <h2 class="text_head" routerLink="/dash">Inventario</h2>
       </div>
       <div class="header_sub">
-          <h2 class="text_head">Bienvenido, {{nombreUsuario}}</h2>
+          <h2 class="text_head">Bienvenido, {{data.username}}</h2>
           <div><button class="btn_primary btn_exit">Salir</button></div>
       </div>
   </header>
@@ -21,8 +21,8 @@
           </section>
           <section class="cont_btn">
               <div>
-                  <div class="btn_menu btn_usuario"><button class="btn_primary" routerLink="/usuarios">Usuario</button></div>
-                  <div class="btn_menu btn_product"><button class="btn_primary"routerLink="/productos">Producto</button></div>
+                  <div *ngIf="data.userType == 1" class="btn_menu btn_usuario"><button class="btn_primary" routerLink="/usuarios">Usuario</button></div>
+                  <div class="btn_menu btn_product"><button class="btn_primary" routerLink="/productos">Producto</button></div>
                   <div class="btn_menu stock_product"><button class="btn_primary" routerLink="/stock">Stock de productos</button></div>
                   <div class="btn_menu movimiento"><button class="btn_primary"routerLink="/movimientos">Moviminetos</button></div>
 

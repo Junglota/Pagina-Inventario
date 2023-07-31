@@ -17,6 +17,7 @@ export class IndexStockComponent implements OnInit{
   constructor(private requestsService:RequestsService){}
 
   ngOnInit(){
+    this.requestsService.checkSession();
     this.cargarStock()
   }
 

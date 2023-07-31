@@ -70,7 +70,7 @@
               <th>Codigo</th>
               <th>Categoria</th>
               <th>Precio</th>
-              <th>Id de Tienda</th>
+              <th *ngIf="sessionData.userType == 1">Id de Tienda</th>
               <th class="acc">Accion</th>
             </tr>
           </thead>
@@ -81,7 +81,7 @@
               <td>{{ producto.idProducto }}</td>
               <td>{{ producto.categoria }}</td>
               <td>{{ producto.precio }}</td>
-              <td>{{ producto.idTienda }}</td>
+              <td *ngIf="sessionData.userType == 1">{{ producto.idTienda }}</td>
               <td class="btn_td acc">
               <button class="btn_editar" (click)="editarProducto(producto)">Editar</button>
               <button class="btn_eliminar" (click)="eliminarProducto(producto.idProducto)">Eliminar</button>

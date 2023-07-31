@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { RequestsService } from '../requests.service';
 
 @Component({
   selector: 'app-dash',
@@ -9,15 +10,19 @@ import Swal from 'sweetalert2';
 export class DashComponent implements OnInit {
 
   ngOnInit() {
-    if(localStorage.getItem('response')){
+    this.requestsService.checkSession();
+    this.data = this.requestsService.getSessionInfo();
+    console.log(this.data)
+
+
+    /*if(localStorage.getItem('response')){
     const datax : any = localStorage.getItem('response');
     const data = JSON.parse(datax);
     this.nombreUsuario = data.username;
-    }
+    }*/
   }
-  nombreUsuario:any;
-
-  constructor(){}
+  data:any;
+  constructor(private requestsService:RequestsService){}
 
   //Boton de salir abre un form por ejemplo
   form(){
@@ -30,6 +35,10 @@ export class DashComponent implements OnInit {
   preConfirm: () => {
   }
     })
+  }
+
+  cerrarSesion(){
+
   }
 
 }

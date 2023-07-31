@@ -13,6 +13,7 @@ export class DashUserComponent implements OnInit {
   constructor(private requestsService: RequestsService) { }
 
   ngOnInit(): void {
+    this.requestsService.checkSession();
     // Obtener la lista de usuarios al cargar el componente
     this.getUsuarios();
   }

@@ -18,17 +18,14 @@ export class DashProductComponent implements OnInit{
   xproductos: any[] = [];
   sessionInfo:any;
   pageSlice:any = this.productos.slice(0,10);
+  sessionData = this.requestsService.getSessionInfo();
+  endpoint:string = this.sessionData.userType == 1? 'Productos': `Productos/tienda/${this.sessionData.idTienda}`
 
   constructor(private requestsService:RequestsService, private cdr: ChangeDetectorRef){}
 
   ngOnInit(): void {
+    this.requestsService.checkSession();
     this.cargarProductos();
-
-      try {
-        this.sessionInfo = this.requestsService.getSessionInfo();
-      } catch (error) {
-        //implementar error handling
-      }
   }
 
 
@@ -43,7 +40,7 @@ export class DashProductComponent implements OnInit{
   }
 
   async cargarProductos(){
-    (await this.requestsService.get('Productos')).subscribe(
+    (await this.requestsService.get(this.endpoint)).subscribe(
       (data: any[]) => {
         // Almacenar la lista de usuarios en la variable 'usuarios'
         this.productos = data;

@@ -21,6 +21,7 @@ export class DashMovimientosComponent implements OnInit{
   constructor(private requestsService: RequestsService) {}
 
   ngOnInit(): void {
+    this.requestsService.checkSession();
       this.cargarMovimientos();
   }
 
