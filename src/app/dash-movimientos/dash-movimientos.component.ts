@@ -17,6 +17,10 @@ export class DashMovimientosComponent implements OnInit{
   xproductos: any[] = [];
   sessionInfo:any;
   pageSlice:any = this.Movimientos.slice(0,10);
+  sessionData = this.requestsService.getSessionInfo();
+  endpoint:string = this.sessionData.userType == 1? 'Movimientos': `Movimientos/tienda/${this.sessionData.idTienda}`;
+  inputTienda:boolean = this.sessionData.userType == 1? true:false;
+
 
   constructor(private requestsService: RequestsService) {}
 
@@ -26,7 +30,7 @@ export class DashMovimientosComponent implements OnInit{
   }
 
   async cargarMovimientos(){
-    (await this.requestsService.get('Movimientos')).subscribe(
+    (await this.requestsService.get(this.endpoint)).subscribe(
       (data: any[]) => {
         // Almacenar la lista de usuarios en la variable 'usuarios'
         this.Movimientos = data;

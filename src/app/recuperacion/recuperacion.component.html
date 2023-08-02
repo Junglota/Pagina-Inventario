@@ -7,12 +7,14 @@
                     <div class="form_imput">
                         <h2 class="form_title">Hola, <span>Usuario</span></h2>
                         <p class="title_sec">Estas recuperando tu contraseña</p>
-                        <div class="group_imput group_imput_logic">
-                            <input type="password" id="newPassword" class="form_input" placeholder="Escribe la nueva contraseña">
-                            <input type="password" id="confirmPassword" class="form_input" placeholder="Escribe repite la contraseña">
+                        <form #form="ngForm">
+                          <div class="group_imput group_imput_logic">
+                            <input ngModel name="password" type="password" id="newPassword" class="form_input" placeholder="Escribe la nueva contraseña">
+                            <input ngModel name="confirmPassword" type="password" id="confirmPassword" class="form_input" placeholder="Escribe repite la contraseña">
                         </div>
+                        </form>
                         <div class="btn">
-                            <button class="btn_primary" id="update">Actualizar</button>
+                            <button (click)="changePassword(form)" class="btn_primary" id="update">Actualizar</button>
                         </div>
                     </div>
                 </div>
@@ -20,44 +22,4 @@
             </div>
         </div>
     </main>
-    <script>
-        document.getElementById("update").addEventListener("click", function () {
-            updatePassword();
-        });
-
-        function updatePassword() {
-            var newPassword = document.getElementById("newPassword").value;
-            var confirmPassword = document.getElementById("confirmPassword").value;
-
-            // Verificar si las contraseñas coinciden
-            if (newPassword !== confirmPassword) {
-                swal("Error", "Las contraseñas no coinciden", "error");
-                return;
-            }
-
-            // Crear objeto de solicitud
-            var requestData = {
-                newPassword: newPassword
-            };
-
-            // Realizar la solicitud POST a la API para actualizar la contraseña
-            fetch('https://contabilidadsinrebu.azurewebsites.net/api/Login/resetpassword', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization':  'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImNvcnJlb0BtYWlsLmNvbSIsIlVzZXJUeXBlIjoiMSIsImV4cCI6MTY4OTMyMDUzN30.Z6OfE0LAvfLAoQKTP49skDqK2UE4jPmjTGz2uELdvco'
-
-                    },
-                    body: JSON.stringify(requestData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    swal("Contraseña actualizada!", "Listo", "success");
-                })
-                .catch(error => {
-                    swal("Error", "No se pudo actualizar la contraseña", "error");
-                });
-        }
-    </script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>

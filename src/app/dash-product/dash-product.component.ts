@@ -19,7 +19,8 @@ export class DashProductComponent implements OnInit{
   sessionInfo:any;
   pageSlice:any = this.productos.slice(0,10);
   sessionData = this.requestsService.getSessionInfo();
-  endpoint:string = this.sessionData.userType == 1? 'Productos': `Productos/tienda/${this.sessionData.idTienda}`
+  endpoint:string = this.sessionData.userType == 1? 'Productos': `Productos/tienda/${this.sessionData.idTienda}`;
+  inputTienda:boolean = this.sessionData.userType == 1? true:false;
 
   constructor(private requestsService:RequestsService, private cdr: ChangeDetectorRef){}
 
@@ -55,28 +56,32 @@ export class DashProductComponent implements OnInit{
   }
 
   async agregarProducto(){
+    let htmlModal = `<div class="form-group">
+    <label for="nombre">Nombre de producto:</label>
+    <input type="text" id="nombre" name="nombre" required>
+  </div>
+  <div class="form-group">
+    <label for="intId">Codigo:</label>
+    <input type="text" id="intId" name="intId" required>
+  </div>
+  <div class="form-group">
+    <label for="categoria">Categoria:</label>
+    <input type="text" id="categoria" name="categoria" required>
+  </div>
+  <div class="form-group">
+    <label for="precio">Precio:</label>
+    <input type="text" id="precio" name="precio" required>
+  </div>`;
+  if(this.inputTienda){
+    htmlModal+= `<div class="form-group">
+    <label for="correo">Id de Tienda:</label>
+    <input type="text" id="idTienda" name="idTienda" required>
+  </div>`
+  }
+
     Swal.fire({
       title: 'Agregar producto',
-      html: `<div class="form-group">
-      <label for="nombre">Nombre de producto:</label>
-      <input type="text" id="nombre" name="nombre" required>
-    </div>
-    <div class="form-group">
-      <label for="intId">Codigo:</label>
-      <input type="text" id="intId" name="intId" required>
-    </div>
-    <div class="form-group">
-      <label for="categoria">Categoria:</label>
-      <input type="text" id="categoria" name="categoria" required>
-    </div>
-    <div class="form-group">
-      <label for="precio">Precio:</label>
-      <input type="text" id="precio" name="precio" required>
-    </div>
-    <div class="form-group">
-      <label for="correo">Id de Tienda:</label>
-      <input type="text" id="idTienda" name="idTienda" required>
-    </div>`,
+      html: htmlModal,
       confirmButtonText: 'Crear Producto',
       showCancelButton: true,
       cancelButtonColor: '#d33',
@@ -86,7 +91,7 @@ export class DashProductComponent implements OnInit{
         const intId = Swal.getPopup()?.querySelector<any>('#intId').value;
         const categoria = Swal.getPopup()?.querySelector<any>('#categoria').value;
         const precio = Swal.getPopup()?.querySelector<any>('#precio').value;
-        const idTienda = Swal.getPopup()?.querySelector<any>('#idTienda').value;
+        const idTienda = this.inputTienda? Swal.getPopup()?.querySelector<any>('#idTienda').value: this.sessionData.idTienda;
         if (!nombre || !intId|| !categoria|| !precio || !idTienda) {
           Swal.showValidationMessage(`Completa todos los campos`)
         }
@@ -110,35 +115,38 @@ export class DashProductComponent implements OnInit{
           (error: any) => {
             console.error('Error al agregar un nuevo usuario:', error);
           }
-        );
+        )
       }
 
     })
   }
 
   async editarProducto(producto:any){
-    Swal.fire({
-      title: 'Editar Producto',
-      html: `<div class="form-group">
-      <label for="nombre">Nombre de producto:</label>
-      <input type="text" id="nombre" name="nombre" value=${producto.nombre} required>
-    </div>
-    <div class="form-group">
-      <label for="intId">Codigo:</label>
-      <input type="text" id="intId" name="intId" value=${producto.idProducto} required>
-    </div>
-    <div class="form-group">
-      <label for="categoria">Categoria:</label>
-      <input type="text" id="categoria" name="categoria" value=${producto.categoria} required>
-    </div>
-    <div class="form-group">
-      <label for="precio">Precio:</label>
-      <input type="text" id="precio" name="precio" value=${producto.precio} required>
-    </div>
-    <div class="form-group">
+    let htmlModal = `<div class="form-group">
+    <label for="nombre">Nombre de producto:</label>
+    <input type="text" id="nombre" name="nombre" value=${producto.nombre} required>
+  </div>
+  <div class="form-group">
+    <label for="intId">Codigo:</label>
+    <input type="text" id="intId" name="intId" value=${producto.idProducto} required>
+  </div>
+  <div class="form-group">
+    <label for="categoria">Categoria:</label>
+    <input type="text" id="categoria" name="categoria" value=${producto.categoria} required>
+  </div>
+  <div class="form-group">
+    <label for="precio">Precio:</label>
+    <input type="text" id="precio" name="precio" value=${producto.precio} required>
+  </div>`;
+    if(this.inputTienda){
+      htmlModal += `<div class="form-group">
       <label for="correo">Id de Tienda:</label>
       <input type="text" id="idTienda" name="idTienda" value=${producto.idTienda} required>
-    </div>`,
+    </div>`
+    }
+    Swal.fire({
+      title: 'Editar Producto',
+      html: htmlModal,
       confirmButtonText: 'Modificar Producto',
       showCancelButton: true,
       cancelButtonColor: '#d33',
@@ -148,7 +156,7 @@ export class DashProductComponent implements OnInit{
         const intId = Swal.getPopup()?.querySelector<any>('#intId').value;
         const categoria = Swal.getPopup()?.querySelector<any>('#categoria').value;
         const precio = Swal.getPopup()?.querySelector<any>('#precio').value;
-        const idTienda = Swal.getPopup()?.querySelector<any>('#idTienda').value;
+        const idTienda = this.inputTienda? Swal.getPopup()?.querySelector<any>('#idTienda').value: this.sessionData.idTienda;
         if (!nombre || !intId|| !categoria|| !precio || !idTienda) {
           Swal.showValidationMessage(`Completa todos los campos`)
         }

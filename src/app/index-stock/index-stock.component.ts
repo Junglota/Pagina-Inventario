@@ -13,6 +13,10 @@ export class IndexStockComponent implements OnInit{
   xproductos: any[] = [];
   sessionInfo:any;
   pageSlice:any = this.productos.slice(0,10);
+  sessionData = this.requestsService.getSessionInfo();
+  endpoint:string = this.sessionData.userType == 1? 'Inventarios': `Inventarios/tienda/${this.sessionData.idTienda}`;
+  inputTienda:boolean = this.sessionData.userType == 1? true:false;
+
 
   constructor(private requestsService:RequestsService){}
 
@@ -22,7 +26,7 @@ export class IndexStockComponent implements OnInit{
   }
 
   async cargarStock(){
-    (await this.requestsService.get('Inventarios')).subscribe(
+    (await this.requestsService.get(this.endpoint)).subscribe(
       (data: any[]) => {
         // Almacenar la lista de usuarios en la variable 'usuarios'
         this.productos = data;
@@ -39,14 +43,7 @@ export class IndexStockComponent implements OnInit{
   editarStock(stock:any){
     Swal.fire({
       title: 'Editar inventario',
-      html: `<div class="form-group">
-      <label for="nombre">Nombre de producto:</label>
-      <input type="text" id="nombre" name="nombre" value=${stock.intId} required disabled>
-    </div>
-    <div class="form-group">
-      <label for="intId">Codigo:</label>
-      <input type="text" id="intId" name="intId" value=${stock.idProducto} required disabled>
-    </div>
+      html: `
     <div class="form-group">
       <label for="stock">Stock:</label>
       <input type="text" id="stock" name="stock" value=${ stock.stock} required>
@@ -54,10 +51,6 @@ export class IndexStockComponent implements OnInit{
     <div class="form-group">
       <label for="stockMinimo">Stock Minimo:</label>
       <input type="text" id="stockMinimo" name="stockMinimo" value=${ stock.stockMinimo} required>
-    </div>
-    <div class="form-group">
-      <label for="correo">Id de Tienda:</label>
-      <input type="text" id="idTienda" name="idTienda" value=${stock.idTienda} required disabled>
     </div>`,
       confirmButtonText: 'Modificar Producto',
       showCancelButton: true,
@@ -66,10 +59,10 @@ export class IndexStockComponent implements OnInit{
       preConfirm: () => {
         //const nombre = Swal.getPopup()?.querySelector<any>('#nombre').value;
         const intId = stock.intId;
-        const idProducto = Swal.getPopup()?.querySelector<any>('#intId').value;
+        const idProducto = stock.idProducto;
         const cantidad = Swal.getPopup()?.querySelector<any>('#stock').value;
         const stockMinimo = Swal.getPopup()?.querySelector<any>('#stockMinimo').value;
-        const idTienda = Swal.getPopup()?.querySelector<any>('#idTienda').value;
+        const idTienda = stock.idTienda;
         if (/*!nombre ||*/ !idProducto|| !cantidad|| !stockMinimo || !idTienda) {
           Swal.showValidationMessage(`Completa todos los campos`)
         }

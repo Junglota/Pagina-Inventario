@@ -16,6 +16,7 @@ import { RecuperacionComponent } from './recuperacion/recuperacion.component';
 import { DashMovimientosComponent } from './dash-movimientos/dash-movimientos.component';
 import { DashUserProductComponent } from './dash-user-product/dash-user-product.component';
 import { IndexCategoriaComponent } from './index-categoria/index-categoria.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 const appRoutes: Routes = [
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
   {path: 'movimientos',component:DashMovimientosComponent},
   {path: 'usuarioproducto',component:DashUserProductComponent},
   {path: 'categoria',component:IndexCategoriaComponent},
+  {path: 'olvidado',component:ForgotPasswordComponent},
 ]
 
 @NgModule({
@@ -42,7 +44,8 @@ const appRoutes: Routes = [
     //DashMovimientosComponent,
     DashUserProductComponent,
     IndexCategoriaComponent,
-    DashMovimientosComponent
+    DashMovimientosComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
