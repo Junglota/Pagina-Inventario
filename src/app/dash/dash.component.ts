@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { RequestsService } from '../requests.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dash',
@@ -10,9 +11,13 @@ import { RequestsService } from '../requests.service';
 export class DashComponent implements OnInit {
 
   ngOnInit() {
-    this.requestsService.checkSession();
+    try {
+      this.requestsService.checkSession();
     this.data = this.requestsService.getSessionInfo();
     console.log(this.data)
+    } catch (error) {
+
+    }
 
 
     /*if(localStorage.getItem('response')){
@@ -22,7 +27,7 @@ export class DashComponent implements OnInit {
     }*/
   }
   data:any;
-  constructor(private requestsService:RequestsService){}
+  constructor(private requestsService:RequestsService, private router:Router){}
 
   //Boton de salir abre un form por ejemplo
   form(){
@@ -38,7 +43,8 @@ export class DashComponent implements OnInit {
   }
 
   cerrarSesion(){
-
+    localStorage.clear();
+    this.router.navigate([''])
   }
 
 }

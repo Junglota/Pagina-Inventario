@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class RequestsService {
 
-  url: string = "https://contabilidadsinrebu.azurewebsites.net/api/"
+  url: string = "https://localhost:7292/api/"
   constructor(private http:HttpClient, private Router:Router) { }
 
   async login(body:any,endpoint:string){
@@ -64,9 +64,10 @@ export class RequestsService {
   }
 
   checkSession(){
-    let token = this.getJWT();
+
     let decodedToken;
     try {
+      let token = this.getJWT();
       decodedToken = jwt_decode(token) as { [key: string]: any };
     } catch (error) {
       console.log('Error decodificando el token', error);

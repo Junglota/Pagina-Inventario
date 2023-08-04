@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RequestsService } from '../requests.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dash-user',
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
 export class DashUserComponent implements OnInit {
   usuarios: any[] = []; // Variable para almacenar la lista de usuarios
 
-  constructor(private requestsService: RequestsService) { }
+  constructor(private requestsService: RequestsService, private router:Router) { }
 
   ngOnInit(): void {
     this.requestsService.checkSession();
@@ -238,5 +239,9 @@ export class DashUserComponent implements OnInit {
       case 3: return "Empleado"
       default: return "Error"
     }
+  }
+  cerrarSesion(){
+    localStorage.clear();
+    this.router.navigate([''])
   }
 }

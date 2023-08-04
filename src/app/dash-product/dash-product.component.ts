@@ -4,6 +4,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ChangeDetectorRef } from '@angular/core';
 import { tap } from 'rxjs';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dash-product',
@@ -22,11 +23,15 @@ export class DashProductComponent implements OnInit{
   endpoint:string = this.sessionData.userType == 1? 'Productos': `Productos/tienda/${this.sessionData.idTienda}`;
   inputTienda:boolean = this.sessionData.userType == 1? true:false;
 
-  constructor(private requestsService:RequestsService, private cdr: ChangeDetectorRef){}
+  constructor(private requestsService:RequestsService, private cdr: ChangeDetectorRef, private router:Router){}
 
   ngOnInit(): void {
-    this.requestsService.checkSession();
+    try {
+      this.requestsService.checkSession();
     this.cargarProductos();
+    } catch (error) {
+
+    }
   }
 
 
@@ -225,6 +230,11 @@ export class DashProductComponent implements OnInit{
     this.pageSlice = resultados.slice(0,10)
     console.log(resultados)
     console.log(this.pageSlice)
+  }
+
+  cerrarSesion(){
+    localStorage.clear();
+    this.router.navigate([''])
   }
 
 }

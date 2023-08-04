@@ -5,6 +5,7 @@ import { RequestsService } from '../requests.service';
 import { Movimiento } from '../movimiento.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 //import {DashMovimientosComponent} from './dash-movimientos.component';
 
 @Component({
@@ -22,7 +23,7 @@ export class DashMovimientosComponent implements OnInit{
   inputTienda:boolean = this.sessionData.userType == 1? true:false;
 
 
-  constructor(private requestsService: RequestsService) {}
+  constructor(private requestsService: RequestsService, private router:Router) {}
 
   ngOnInit(): void {
     this.requestsService.checkSession();
@@ -122,6 +123,10 @@ export class DashMovimientosComponent implements OnInit{
       endIndex = this.xproductos.length;
     }
     this.pageSlice = this.xproductos.slice(index,endIndex);
+  }
+  cerrarSesion(){
+    localStorage.clear();
+    this.router.navigate([''])
   }
  /* onScanSuccess(event: BarcodeScannerEnabledEvent): void {
     this.scannedCode = event.code;

@@ -2,6 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { RequestsService } from '../requests.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-index-stock',
@@ -18,7 +19,7 @@ export class IndexStockComponent implements OnInit{
   inputTienda:boolean = this.sessionData.userType == 1? true:false;
 
 
-  constructor(private requestsService:RequestsService){}
+  constructor(private requestsService:RequestsService, private router:Router){}
 
   ngOnInit(){
     this.requestsService.checkSession();
@@ -131,5 +132,9 @@ export class IndexStockComponent implements OnInit{
       endIndex = this.xproductos.length;
     }
     this.pageSlice = this.xproductos.slice(index,endIndex);
+  }
+  cerrarSesion(){
+    localStorage.clear();
+    this.router.navigate([''])
   }
 }

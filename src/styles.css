@@ -180,6 +180,7 @@
   overflow: hidden;
   min-height: 580px;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .btn_user {
@@ -202,6 +203,7 @@
   font-size: 20px;
   border: none;
   border-bottom: 2px solid #111;
+  box-sizing: border-box;
 }
 
 .input_bus:focus {
@@ -210,6 +212,11 @@
 
 .table {
   color: #111;
+  width: 100%;
+  margin-top: 15px;
+  height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .table:hover {
@@ -218,12 +225,20 @@
 
 .list_table {
   text-align: left;
+  width: 100%;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 200px 250px 150px 250px 100px 350px;
+  align-items: center;
+  text-align: start;
+  border-bottom: 2px solid #111;
 }
 
 table {
   padding: 5px;
   margin-top: 20px;
   width: 100%;
+  border-collapse: collapse;
 }
 
 th {
@@ -252,6 +267,7 @@ td {
   width: 80px;
   margin-left: 10px;
   border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
 .btn_editar:hover {
@@ -259,6 +275,24 @@ td {
   background-color: #fff;
   color: #248a10;
   outline: solid 2px #248a10;
+}
+
+.btn_eliminar {
+  padding: 5px;
+  background-color: #fb0707;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  border-radius: 5px;
+  width: 80px;
+  transition: all 0.3s ease;
+}
+
+.btn_eliminar:hover {
+  cursor: pointer;
+  background-color: #fff;
+  outline: solid 2px #fb0707;
+  color: #fb0707;
 }
 
 .btn_eliminar {
