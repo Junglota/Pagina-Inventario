@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class ForgotPasswordComponent {
 
+  bodyProp:string = "correo"
   input:any;
   endpoint:string = 'Login/forgotpassword'
 
@@ -23,7 +24,7 @@ export class ForgotPasswordComponent {
 
   async enviarCorreo(){
     let body = {
-      correo: `${this.input}`
+      [this.bodyProp]: `${this.input}`
     };
     console.log(body);
 
@@ -44,9 +45,11 @@ export class ForgotPasswordComponent {
           this.pagPlaceholder = 'Codigo de verificacion';
           this.pagButton = 'Enviar Codigo';
           this.correoNoEnviado = false;
-          //this.endpoint = *endpointporcrear*
+          this.endpoint = "Login/etokencheck"
+          this.bodyProp = "eToken"
         }else{
-          this.router.navigate(['/recuperacion'],data)
+          localStorage.setItem('eToken',JSON.stringify(body))
+          this.router.navigate(['/recuperacion'])
         }
       },
       (error: any) => {

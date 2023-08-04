@@ -35,11 +35,11 @@
                   <tbody>
                     <tr *ngFor="let producto of pageSlice">
                       <td class="id_user_num">{{ producto.idProducto }}</td>
-                      <td>{{ producto.intId }}</td>
-                      <td>{{ producto.idProducto }}</td>
+                      <td>{{ producto.nombreProducto }}</td>
+                      <td>{{ producto.codigoProducto }}</td>
                       <td>{{ producto.stock }}</td>
                       <td>{{ producto.stockMinimo }}</td>
-                      <td *ngIf="sessionData.userType==1">{{ producto.idTienda }}</td>
+                      <td *ngIf="sessionData.userType==1">{{ producto.nombreTienda }}</td>
                       <td class="btn_td acc">
                       <button class="btn_editar" (click)="editarStock(producto)">Editar</button>
                       <button class="btn_eliminar" (click)="eliminarStock(producto.intId)">Eliminar</button>
