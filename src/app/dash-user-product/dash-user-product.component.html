@@ -1,7 +1,7 @@
 <body>
     <header class="header">
       <div>
-        <h2 class="text_head">Inventario</h2>
+        <h2 class="text_head" routerLink="/dash">Inventario</h2>
       </div>
       <div class="header_sub">
         <h2 class="text_head">Usuario</h2>
@@ -17,12 +17,12 @@
             <div class="form-group">
               <label for="Producto">Producto:</label>
               <label for="Producto">Manzana</label>
-  
+
             </div>
             <div class="form-group">
               <label for="Codigo">Codigo:</label>
               <label for="Codigo">2023432223</label>
-  
+
             </div>
             <div class="form-group">
               <label for="Cantidad">Cantidad contada:</label>
@@ -71,21 +71,21 @@
       </div>
     </main>
     <script>
-  
+
       document.addEventListener('DOMContentLoaded', function () {
         const cancelBtn = document.querySelector('.btn_cancelar_user');
         const accion_realiza = document.querySelector('.btn_submit');
-  
+
         const modal = document.querySelector('.modal-agregar');
         const cuerpo = document.querySelector('.table');
-  
+
         // Asignar el evento de clic al contenedor del botón
         cuerpo.addEventListener('click', function (event) {
           if (event.target.classList.contains('exit_product')) {
             modal.classList.add('mostrar');
           }
         });
-  
+
         cancelBtn.addEventListener('click', () => {
           modal.classList.remove('mostrar');
         });
@@ -93,10 +93,10 @@
           alert("Listo")
         });
       });
-  
+
       // Obtener el elemento con la clase "btn_usuario"
       var btnUsuario = document.querySelector('.btn_exit');
-  
+
       // Agregar el evento de clic al elemento
       btnUsuario.addEventListener('click', function () {
         // Redireccionar al archivo "usuario.html"

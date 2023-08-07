@@ -27,6 +27,7 @@ export class IndexStockComponent implements OnInit{
   }
 
   async cargarStock(){
+    console.log(this.endpoint);
     (await this.requestsService.get(this.endpoint)).subscribe(
       (data: any[]) => {
         // Almacenar la lista de usuarios en la variable 'usuarios'
@@ -42,6 +43,8 @@ export class IndexStockComponent implements OnInit{
   }
 
   editarStock(stock:any){
+    console.log(stock);
+
     Swal.fire({
       title: 'Editar inventario',
       html: `
@@ -60,11 +63,13 @@ export class IndexStockComponent implements OnInit{
       preConfirm: () => {
         //const nombre = Swal.getPopup()?.querySelector<any>('#nombre').value;
         const intId = stock.intId;
-        const idProducto = stock.idProducto;
+        const idProducto = stock.codigoProducto;
         const cantidad = Swal.getPopup()?.querySelector<any>('#stock').value;
         const stockMinimo = Swal.getPopup()?.querySelector<any>('#stockMinimo').value;
         const idTienda = stock.idTienda;
         if (/*!nombre ||*/ !idProducto|| !cantidad|| !stockMinimo || !idTienda) {
+          console.log(idProducto,cantidad,stockMinimo,idTienda);
+
           Swal.showValidationMessage(`Completa todos los campos`)
         }
         return {
@@ -133,6 +138,19 @@ export class IndexStockComponent implements OnInit{
     }
     this.pageSlice = this.xproductos.slice(index,endIndex);
   }
+
+  buscarProducto(busqueda: string): void {
+    console.log(busqueda)
+    let resultados:any
+    resultados = this.productos.filter((val) =>
+      val && val.nombreProducto && val.nombreProducto.toLowerCase().includes(busqueda)
+    );
+    this.pageSlice = resultados.slice(0,10)
+    console.log(resultados)
+    console.log(this.pageSlice)
+  }
+
+
   cerrarSesion(){
     localStorage.clear();
     this.router.navigate([''])

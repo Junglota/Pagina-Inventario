@@ -4,7 +4,7 @@
         <h2 class="text_head" routerLink="/pri">Inventario</h2>
       </div>
       <div class="header_sub">
-        <h2 class="text_head">Administrador</h2>
+        <h2 *ngIf="sessionData.userType == 1" class="text_head" >Administrador</h2>
         <div><button class="btn_primary btn_exit" (click)="cerrarSesion()">Salir</button></div>
       </div>
     </header>
@@ -24,6 +24,7 @@
           <h2>Lista de movimientos</h2>
           <div class="container_menu_table">
             <div>
+              <button class="btn_primary btn_user btn_agregar" (click)="agregarMovimiento()">Nuevo Movimiento</button>
             </div>
             <div>
               <input type="text" class="input_bus" placeholder="Buscar">

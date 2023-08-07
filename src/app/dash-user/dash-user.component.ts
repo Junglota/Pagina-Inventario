@@ -10,13 +10,19 @@ import { Router } from '@angular/router';
 })
 export class DashUserComponent implements OnInit {
   usuarios: any[] = []; // Variable para almacenar la lista de usuarios
+  pageSlice:any = this.usuarios.slice(0,10);
+  xproductos: any[] = [];
 
   constructor(private requestsService: RequestsService, private router:Router) { }
 
   ngOnInit(): void {
-    this.requestsService.checkSession();
+    try {
+      this.requestsService.checkSession();
     // Obtener la lista de usuarios al cargar el componente
     this.getUsuarios();
+    } catch (error) {
+
+    }
   }
 
   // Función para obtener la lista de usuarios desde el servicio
@@ -25,6 +31,8 @@ export class DashUserComponent implements OnInit {
       (data: any[]) => {
         // Almacenar la lista de usuarios en la variable 'usuarios'
         this.usuarios = data;
+        this.xproductos = this.usuarios;
+        this.pageSlice = this.xproductos.slice(0,10);
       },
       (error: any) => {
         console.error('Error al obtener la lista de usuarios:', error);
@@ -231,6 +239,18 @@ export class DashUserComponent implements OnInit {
     })
   }
 
+// busca los usuarios por nombre
+  buscarUsuarios(busqueda: string): void {
+    console.log(busqueda)
+    let resultados:any
+    resultados = this.usuarios.filter((val) =>
+      val && val.nombre && val.nombre.toLowerCase().includes(busqueda)
+    );
+    this.pageSlice = resultados.slice(0,10)
+    console.log(resultados)
+    console.log(this.pageSlice)
+  }
+
 
   getPermisoText(userType:any){
     switch(userType){
@@ -240,6 +260,7 @@ export class DashUserComponent implements OnInit {
       default: return "Error"
     }
   }
+
   cerrarSesion(){
     localStorage.clear();
     this.router.navigate([''])

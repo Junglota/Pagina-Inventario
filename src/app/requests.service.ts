@@ -18,6 +18,10 @@ export class RequestsService {
 
     return await this.http.post<any>(`${this.url}${endpoint}`,body)
   }
+  async signup(body:any,endpoint:string){
+
+    return await this.http.post<any>(`${this.url}${endpoint}`,body)
+  }
 
 
   async get(endpoint:string){
