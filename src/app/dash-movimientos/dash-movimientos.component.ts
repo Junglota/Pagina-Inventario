@@ -21,6 +21,7 @@ export class DashMovimientosComponent implements OnInit{
   sessionData = this.requestsService.getSessionInfo();
   endpoint:string = this.sessionData.userType == 1? 'Movimientos': `Movimientos/tienda/${this.sessionData.idTienda}`;
   inputTienda:boolean = this.sessionData.userType == 1? true:false;
+  tipoMovimiento:string='';
 
 
   constructor(private requestsService: RequestsService, private router:Router) {}
@@ -43,6 +44,96 @@ export class DashMovimientosComponent implements OnInit{
         console.error('Error al obtener la lista de movimientos:', error);
       }
     );
+  }
+
+  async agregarMovimiento(){
+    let htmlModal = `<div class="form-group">
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha" name="nombre" required>
+  </div>
+  <div class="form-group">
+    <label for="idProducto">Codigo del producto:</label>
+    <input type="text" id="idProducto" name="idProducto" required>
+  </div>
+  <div class="form-group">
+      <label for="tipoMovimiento">Tipo de movimiento:</label>
+      <select id="tipoMovimiento" name="tipoMovimiento" required>
+        <option value="" disabled selected>-- Seleccione --</option>
+        <option value="E">Entrada de productos</option>
+        <option value="S">Salida de productos</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="descripcion">Descripcion:</label>
+      <select id="descripcion" name="descripcion" required>
+        <option value="" disabled selected>-- Seleccione --</option>
+        <option value="Compras">Compras</option>
+        <option value="Dañados">Dañados</option>
+        <option value="Traslado">Traslado</option>
+        <option value="Ventas">Ventas</option>
+      </select>
+    </div>
+  <div class="form-group">
+    <label for="cantidad">Cantidad:</label>
+    <input type="text" id="cantidad" name="cantidad" required>
+  </div>`;
+  if(this.inputTienda){
+    htmlModal+= `
+    <div class="form-group">
+    <label for="idusuario">Usuario:</label>
+    <input type="text" id="idusuario" name="idusuario" required>
+  </div>
+    <div class="form-group">
+    <label for="idTienda">Id de Tienda:</label>
+    <input type="text" id="idTienda" name="idTienda" required>
+  </div>`
+  }
+
+    Swal.fire({
+      title: 'Agregar movimiento',
+      html: htmlModal,
+      confirmButtonText: 'Crear Movimiento',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      focusConfirm: false,
+      preConfirm: () => {
+        const fecha = Swal.getPopup()?.querySelector<any>('#fecha').value;
+        const idProducto = Swal.getPopup()?.querySelector<any>('#idProducto').value;
+        const cantidad = Swal.getPopup()?.querySelector<any>('#cantidad').value;
+        const tipoMovimiento = Swal.getPopup()?.querySelector<any>('#tipoMovimiento').value;
+        const descripcion = Swal.getPopup()?.querySelector<any>('#descripcion').value;
+        const usuario = this.inputTienda? Swal.getPopup()?.querySelector<any>('#idusuario').value: this.sessionData.intId;
+        const idTienda = this.inputTienda? Swal.getPopup()?.querySelector<any>('#idTienda').value: this.sessionData.idTienda;
+        if (!fecha || !idProducto|| !cantidad|| !tipoMovimiento || !descripcion || !usuario || !idTienda) {
+          Swal.showValidationMessage(`Completa todos los campos`)
+        }
+        return {
+          fecha: fecha,
+          idProducto: idProducto,
+          tipoMovimiento: tipoMovimiento,
+          descripcion: descripcion,
+          cantidad: Number(cantidad),
+          usuario: Number(usuario),
+          idTienda: Number(idTienda),
+        }
+      }
+    }).then(async (result) => {
+      let tipoMovimiento = (result.value?.tipoMovimiento === 'E')? 'movimientoentrada':'movimientosalida';
+      console.log(result, tipoMovimiento);
+      //Mandar usuario a la base de datos si todo correcto
+      if(result.isConfirmed){
+        (await this.requestsService.post(`Movimientos/${tipoMovimiento}`, result.value)).subscribe(
+          (data: any) => {
+            // Actualizar la lista de usuarios después de agregar uno nuevo
+            this.cargarMovimientos();
+          },
+          (error: any) => {
+            console.error('Error al agregar un nuevo usuario:', error);
+          }
+        )
+      }
+
+    })
   }
 
   async editarMovimiento(movimiento:any){

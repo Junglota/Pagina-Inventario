@@ -21,9 +21,11 @@
           <section class="cont_btn">
               <div>
                   <div *ngIf="data.userType == 1" class="btn_menu btn_usuario"><button class="btn_primary" routerLink="/usuarios">Usuario</button></div>
-                  <div class="btn_menu btn_product"><button class="btn_primary" routerLink="/productos">Producto</button></div>
+                  <div class="btn_menu btn_product"><button class="btn_primary" routerLink="/productos">Productos</button></div>
                   <div class="btn_menu stock_product"><button class="btn_primary" routerLink="/stock">Stock de productos</button></div>
                   <div class="btn_menu movimiento"><button class="btn_primary"routerLink="/movimientos">Movimientos</button></div>
+                  <div class="btn_menu movimiento"><button class="btn_primary"routerLink="/configuracion">Movimientos</button></div>
+                  <div *ngIf="data.userType == 1" class="btn_menu movimiento"><button class="btn_primary"routerLink="/tiendas">Tiendas</button></div>
 
                 </div>
           </section>

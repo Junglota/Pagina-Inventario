@@ -1,7 +1,7 @@
 <body>
     <header class="header">
       <div>
-        <h2 class="text_head">Nombre del sistema</h2>
+        <h2 class="text_head" routerLink="/dash">Inventario</h2>
       </div>
       <div class="header_sub">
         <h2 class="text_head">Administrador</h2>
@@ -77,43 +77,43 @@
         var titulo = document.querySelector(".modal-contenido-user h2");
         // Obtener el elemento del botón "Submit"
         var btnSubmit = document.querySelector(".btn_submit");
-  
+
         // Cambiar el texto del título
         titulo.textContent = "Modificar categoria de Producto";
         // Cambiar el texto del botón "Submit"
         btnSubmit.textContent = "Actualizar";
       });
-  
+
       var btnEliminar = document.querySelector('.btn_eliminar');
       var modal = document.querySelector('.modal');
       var modal_cont = document.querySelector('.modal-contenido');
       var btnConfirmar = document.querySelector('.btn_confirmar');
       var btnCancelar = document.querySelector('.modal-contenido-user .btn_cancelar_user');
       var btnClose = document.querySelector('.btn_cancelar');
-  
+
       btnCancelar.addEventListener('click', function () {
         modalAgregar.classList.remove('mostrar');
       });
       btnClose.addEventListener('click', function () {
         modal.classList.remove('mostrar');
       });
-  
+
       // Lógica de eliminación del usuario
       btnEliminar.addEventListener('click', function () {
         modal.classList.add('mostrar');
         modal_cont.classList.add('mostrar');
       });
-  
+
       btnConfirmar.addEventListener('click', function () {
         alert('Categoria eliminada');
         modal.classList.remove('mostrar');
         modal_cont.classList.remove('mostrar');
       });
-  
+
       var btnAgregar = document.querySelector('.btn_agregar');
       var modalAgregar = document.querySelector('.modal-agregar');
       var btnCancelar = document.querySelector('.btn_cancelar_user');
-  
+
       btnAgregar.addEventListener('click', function () {
         modalAgregar.classList.add('mostrar');
         // Obtener el elemento del título
@@ -125,14 +125,14 @@
         // Cambiar el texto del botón "Submit"
         btnSubmit.textContent = "Agregar";
       });
-  
+
       btnCancelar.addEventListener('click', function () {
         modalAgregar.classList.remove('mostrar');
       });
-  
+
       // Obtener el elemento con la clase "btn_usuario"
       var btnUsuario = document.querySelector('.text_head');
-  
+
       // Agregar el evento de clic al elemento
       btnUsuario.addEventListener('click', function () {
         // Redireccionar al archivo "usuario.html"
@@ -140,7 +140,7 @@
       });
       // Obtener el elemento con la clase "btn_usuario"
       var btnSalir = document.querySelector('.btn_exit');
-  
+
       // Agregar el evento de clic al elemento
       btnSalir.addEventListener('click', function () {
         // Redireccionar al archivo "usuario.html"
