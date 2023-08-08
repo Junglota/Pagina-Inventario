@@ -8,17 +8,19 @@
                     <div class="form_imput">
                         <h2 class="form_title">Configuración de la cuenta</h2>
                         <div class="group_input group_input_logic">
-                            <h3>Configurar Gmail</h3>
-                            <input [(ngModel)]="usuario.correoGmail" name="correoGmail" type="email" class="form_input" placeholder="Correo de Gmail" required>
-                            <input [(ngModel)]="usuario.contrasenaActual" name="contrasenaActual" type="password" class="form_input" placeholder="Contraseña actual" required>
-                            <button mat-button [class.loading]="isLoading" (click)="configurarGmail()" class="btn_primary">Configurar</button>
+                            <h3>Cambiar correo</h3>
+                            <form #form="ngForm">
+                            <input ngModel name="correoGmail" type="email" class="form_input" placeholder="Correo de Gmail" required>
+                            <input ngModel name="contrasenaActual" type="password" class="form_input" placeholder="Contraseña actual" required>
+                            </form>
+                            <button mat-button [class.loading]="isLoading"  class="btn_primary" (click)="configurarGmail(form)">Configurar</button>
                         </div>
                         <div class="group_input group_input_logic">
                             <h3>Cambiar Contraseña</h3>
-                            <input [(ngModel)]="usuario.contrasenaActual" name="contrasenaActual" type="password" class="form_input" placeholder="Contraseña actual" required>
-                            <input [(ngModel)]="usuario.nuevaContrasena" name="nuevaContrasena" type="password" class="form_input" placeholder="Nueva contraseña" required>
-                            <input [(ngModel)]="usuario.repetirNuevaContrasena" name="repetirNuevaContrasena" type="password" class="form_input" placeholder="Repetir nueva contraseña" required>
-                            <button mat-button [class.loading]="isLoading" (click)="cambiarContrasena()" class="btn_primary">Cambiar Contraseña</button>
+                            <input [ngModel]="usuario.contrasenaActual" name="contrasenaActual" type="password" class="form_input" placeholder="Contraseña actual" required>
+                            <input [ngModel]="usuario.nuevaContrasena" name="nuevaContrasena" type="password" class="form_input" placeholder="Nueva contraseña" required>
+                            <input [ngModel]="usuario.repetirNuevaContrasena" name="repetirNuevaContrasena" type="password" class="form_input" placeholder="Repetir nueva contraseña" required>
+                            <button mat-button [class.loading]="isLoading"  class="btn_primary">Cambiar Contraseña</button>
                         </div>
                     </div>
                 </div>

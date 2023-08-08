@@ -86,7 +86,10 @@
                 <label>{{ getPermisoText(user.userType) }}</label>
                 <div class="btn_td acc">
                   <button class="btn_editar" (click)="editarUsuario(user)">Editar</button>
-                  <button class="btn_eliminar" (click)="eliminarUsuario(user.intId)">Eliminar</button>
+                  <button [class]="user.estado == 2 ? 'btn_eliminar_special' : 'btn_eliminar'"
+                    (click)="eliminarUsuario(user.intId,user.estado)">
+                    {{ user.estado == 2 ? 'Reactivar' : 'Desactivar' }}
+                  </button>
                 </div>
             </div>
           </div>

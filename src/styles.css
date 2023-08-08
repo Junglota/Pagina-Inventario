@@ -311,6 +311,22 @@ td {
   outline: solid 2px #fb0707;
   color: #fb0707;
 }
+.btn_eliminar_special {
+  padding: 5px;
+  background-color: #0769fb;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  border-radius: 5px;
+  width: 80px;
+}
+
+.btn_eliminar_special:hover {
+  cursor: pointer;
+  background-color: #fff;
+  outline: solid 2px #0769fb;
+  color: #0769fb;
+}
 
 .modal {
   display: none;

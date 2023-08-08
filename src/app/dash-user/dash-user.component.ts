@@ -33,6 +33,8 @@ export class DashUserComponent implements OnInit {
         this.usuarios = data;
         this.xproductos = this.usuarios;
         this.pageSlice = this.xproductos.slice(0,10);
+        console.log(this.usuarios);
+
       },
       (error: any) => {
         console.error('Error al obtener la lista de usuarios:', error);
@@ -99,7 +101,7 @@ export class DashUserComponent implements OnInit {
           password: contraseña,
           correo: correo,
           userType: Number(permiso),
-          idTienda: Number(idTienda)
+          idTienda: Number(idTienda),
         }
       }
     }).then(async (result) => {
@@ -135,23 +137,24 @@ export class DashUserComponent implements OnInit {
   }
 
   // Función para eliminar un usuario
-  async eliminarUsuario(id: number) {
+  async eliminarUsuario(id: number,estado:number) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Estas seguro?',
+      text: `Se ${(estado == 1)?'desactivara':'activara'} la cuenta, desea continuar?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si!'
     }).then(async (result) => {
       if (result.isConfirmed) {
         (await this.requestsService.delete('Usuarios/' + id)).subscribe(
           (data: any) => {
             // Actualizar la lista de usuarios después de eliminar uno
             Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
+              `${(estado == 1)?'Desactivado':'Activado'}`,
+              `La cuenta fue ${(estado == 1)?'desactivada':'activada'}` ,
               'success'
             )
             this.getUsuarios();
@@ -219,7 +222,8 @@ export class DashUserComponent implements OnInit {
           password: user.password,
           correo: correo,
           userType: Number(permiso),
-          idTienda: Number(idTienda)
+          idTienda: Number(idTienda),
+          estado: user.estado
         }
       }
     }).then(async (result) => {
