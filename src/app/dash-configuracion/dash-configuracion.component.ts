@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { RequestsService } from '../requests.service';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dash-configuracion',
@@ -21,7 +22,8 @@ export class DashConfiguracionComponent {
   constructor(private request: RequestsService, private router: Router) {}
 
   async configurarGmail(form: NgForm) {
-    if (this.usuario.correoGmail && this.usuario.contrasenaActual) {
+
+    if (form.value.correoGmail && form.value.contrasenaActual) {
       this.isLoading = true;
 
       const body = {
@@ -31,8 +33,8 @@ export class DashConfiguracionComponent {
       console.log(body);
 
       try {
-        const response = await this.request.post('ValidarCorreoGmail', body);
-        this.isLoading = false;
+        (await this.request.post('ValidarCorreoGmail', body)).subscribe((response)=>{
+          this.isLoading = false;
 
         if (response.valido) {
           Swal.fire({
@@ -55,6 +57,8 @@ export class DashConfiguracionComponent {
             title: 'La contraseña actual no es válida o el correo de Gmail ya está en uso.'
           });
         }
+        });
+
       } catch (error) {
         this.isLoading = false;
         Swal.fire({
@@ -81,7 +85,7 @@ export class DashConfiguracionComponent {
   }
   }
 
-  async cambiarContrasena(form: NgForm) {
+  /* async cambiarContrasena(form: NgForm) {
     if (
       this.usuario.contrasenaActual &&
       this.usuario.nuevaContrasena &&
@@ -135,4 +139,4 @@ export class DashConfiguracionComponent {
     const regex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
     return regex.test(contrasena);
   }
-}
+} */
