@@ -10,12 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./dash-configuracion.component.css']
 })
 export class DashConfiguracionComponent {
-  usuario = {
-    correoGmail: '',
-    contrasenaActual: '',
-    nuevaContrasena: '',
-    repetirNuevaContrasena: ''
-  };
+  sessionData = this.request.getSessionInfo();
 
   isLoading = false;
 
@@ -27,16 +22,17 @@ export class DashConfiguracionComponent {
       this.isLoading = true;
 
       const body = {
-        correoGmail: form.value.correoGmail,
-        contrasenaActual: form.value.contrasenaActual
+        correo : this.sessionData.correo,
+        newCorreo: form.value.correoGmail,
+        password: form.value.contrasenaActual
       };
       console.log(body);
 
       try {
-        (await this.request.post('ValidarCorreoGmail', body)).subscribe((response)=>{
+        (await this.request.post('Login/updatemail', body)).subscribe((response)=>{
           this.isLoading = false;
 
-        if (response.valido) {
+        if (response) {
           Swal.fire({
             toast: true,
             position: 'top',
