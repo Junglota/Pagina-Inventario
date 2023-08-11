@@ -36,11 +36,11 @@
               <tr>
                 <th>Fecha</th>
                 <th>Producto</th>
-                <th>Tipo de Movimiento</th>
+                <th *ngIf="sessionData.userType == 1">Tipo de Movimiento</th>
                 <th>Descripcion</th>
                 <th>Cantidad</th>
                 <th>Usuario</th>
-                <th>Id de Tienda</th>
+                <th *ngIf="sessionData.userType == 1">Id de Tienda</th>
                 <th class="acc">Accion</th>
               </tr>
             </thead>
@@ -49,11 +49,11 @@
                 <td class="id_user_num">{{ movimiento.idProducto }}</td>
                 <td>{{ movimiento.fecha }}</td>
                 <td>{{ movimiento.idProducto }}</td>
-                <td>{{ movimiento.tipoMovimiento }}</td>
+                <td *ngIf="sessionData.userType == 1">{{ movimiento.tipoMovimiento }}</td>
                 <td>{{ movimiento.descripcion }}</td>
                 <td>{{ movimiento.cantidad }}</td>
                 <td>{{ movimiento.usuario }}</td>
-                <td>{{ movimiento.idTienda }}</td>
+                <td *ngIf="sessionData.userType == 1">{{ movimiento.idTienda }}</td>
                 <td class="btn_td acc">
                 <button class="btn_editar" (click)="editarMovimiento(movimiento)">Editar</button>
                 <button class="btn_eliminar" (click)="eliminarMovimiento(movimiento.intId)">Eliminar</button>

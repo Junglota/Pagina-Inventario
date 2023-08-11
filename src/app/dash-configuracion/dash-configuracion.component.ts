@@ -29,10 +29,8 @@ export class DashConfiguracionComponent {
       console.log(body);
 
       try {
-        (await this.request.post('Login/updatemail', body)).subscribe((response)=>{
+        (await this.request.postNoAuth('Login/updatemail', body)).subscribe((response)=>{
           this.isLoading = false;
-
-        if (response) {
           Swal.fire({
             toast: true,
             position: 'top',
@@ -42,63 +40,35 @@ export class DashConfiguracionComponent {
             timer: 5000,
             title: 'Cuenta de Gmail configurada exitosamente'
           });
-        } else {
-          Swal.fire({
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            icon: 'error',
-            timerProgressBar: false,
-            timer: 5000,
-            title: 'La contraseña actual no es válida o el correo de Gmail ya está en uso.'
-          });
-        }
-        });
-
-      } catch (error) {
+        })
+      } catch(error){
         this.isLoading = false;
-        Swal.fire({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          icon: 'error',
-          timerProgressBar: false,
-          timer: 5000,
-          title: 'Error al configurar la cuenta de Gmail'
-        });
+        this.mostrarMensajeError('Error al cambiar el correo');
       }
-    } else {
-      Swal.fire({
-        toast: true,
-        position: 'top',
-        showConfirmButton: false,
-        icon: 'error',
-        timerProgressBar: false,
-        timer: 5000,
-        title: 'Por favor, ingresa el nuevo correo de Gmail y la contraseña actual.'
-      });
     }
   }
-  }
 
-  /* async cambiarContrasena(form: NgForm) {
+  async cambiarContrasena(form: NgForm) {
     if (
-      this.usuario.contrasenaActual &&
-      this.usuario.nuevaContrasena &&
-      this.usuario.repetirNuevaContrasena
+      form.value.contrasenaActual &&
+      form.value.nuevaContrasena &&
+      form.value.repetirNuevaContrasena
     ) {
-      if (this.usuario.nuevaContrasena === this.usuario.repetirNuevaContrasena) {
+      if (form.value.nuevaContrasena === form.value.repetirNuevaContrasena) {
         this.isLoading = true;
 
         const body = {
-          contrasenaActual: this.usuario.contrasenaActual,
-          nuevaContrasena: this.usuario.nuevaContrasena
+          correo: this.sessionData.correo,
+          password: form.value.contrasenaActual,
+          newPassword: form.value.nuevaContrasena
         };
 
         try {
-          await this.request.patch('CambiarContrasena', body);
-          this.isLoading = false;
-          this.mostrarMensajeExitoso('Contraseña cambiada exitosamente');
+          await (await this.request.postNoAuth('Login/updatepassword', body)).subscribe((response)=>{
+            this.isLoading = false;
+          this.mostrarMensajeExitoso('Contraseña cambiada exitosamente, por favor vuelva a iniciar sesion');
+          this.cerrarSesion();
+          })
         } catch (error) {
           this.isLoading = false;
           this.mostrarMensajeError('Error al cambiar la contraseña');
@@ -135,4 +105,13 @@ export class DashConfiguracionComponent {
     const regex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
     return regex.test(contrasena);
   }
-} */
+
+  cerrarSesion(){
+    localStorage.clear();
+    this.router.navigate([''])
+  }
+}
+
+
+
+

@@ -57,7 +57,7 @@
         <div class="container_menu_table">
           <div>
             <button class="btn_primary btn_user btn_agregar" (click)="agregarProducto()">Nuevo Producto</button>
-            <button class="btn_primary btn_user btn_agregar export">Exportar Producto</button>
+            <button class="btn_primary btn_user btn_agregar export" (click)="exportarProductos()">Exportar Producto</button>
           </div>
           <div>
             <input #box type="text" class="input_bus" placeholder="Buscar" (input)="buscarProductos(box.value)">
