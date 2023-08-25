@@ -3,10 +3,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { RequestsService } from '../requests.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { saveAs } from 'file-saver';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+//import pdfMake from 'pdfmake/build/pdfmake';
+//import pdfFonts from 'pdfmake/build/vfs_fonts';
+//import { saveAs } from 'file-saver';
+//pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-index-stock',
@@ -160,7 +160,7 @@ export class IndexStockComponent implements OnInit{
     this.router.navigate([''])
   }
 
-  async imprimirPedidoMinimo() {
+ /* async imprimirPedidoMinimo() {
     const productosBajoStockMinimo = this.productos.filter(producto => producto.stock < producto.stockMinimo);
 
     if (productosBajoStockMinimo.length > 0) {
@@ -197,5 +197,5 @@ export class IndexStockComponent implements OnInit{
     const rows = data.map(item => Object.values(item).join(','));
 
     return header + rows.join('\n');
-  }
+  }*/
 }
