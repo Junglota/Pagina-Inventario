@@ -237,4 +237,32 @@ export class DashProductComponent implements OnInit{
     this.router.navigate([''])
   }
 
+  async exportarProductos() {
+    try {
+      this.exportarCSV(this.productos);
+    } catch (error) {
+      console.error('Error al exportar productos', error);
+    }
+  }
+
+
+
+  private exportarCSV(productos: any[]) {
+    const csvContent = 'data:text/csv;charset=utf-8,' + this.convertToCSV(productos);
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'productos.csv');
+    document.body.appendChild(link);
+    link.click();
+    link.remove(); // Remueve el elemento <a> después de la descarga
+  }
+
+  private convertToCSV(data: any[]): string {
+    const header = Object.keys(data[0]).join(',') + '\n'; // Crea la fila de encabezados
+    const rows = data.map(item => Object.values(item).join(',')); // Crea las filas de datos
+
+    return header + rows.join('\n'); // Combina los encabezados y las filas en una cadena CSV completa
+  }
+
 }

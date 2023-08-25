@@ -35,6 +35,11 @@ export class RequestsService {
       'Authorization': `Bearer ${this.getJWT()}`
     })})
   }
+  async postNoAuth(endpoint:string,data:any){
+    console.log("postnoauth");
+
+    return await this.http.post<any>(`${this.url}${endpoint}`,data)
+  }
   async put(endpoint:string,data:any){
     console.log(data)
     return await this.http.put<any>(`${this.url}${endpoint}`,data,{headers: new HttpHeaders({

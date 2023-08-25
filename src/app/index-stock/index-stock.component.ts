@@ -3,6 +3,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { RequestsService } from '../requests.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { saveAs } from 'file-saver';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-index-stock',
@@ -154,5 +158,44 @@ export class IndexStockComponent implements OnInit{
   cerrarSesion(){
     localStorage.clear();
     this.router.navigate([''])
+  }
+
+  async imprimirPedidoMinimo() {
+    const productosBajoStockMinimo = this.productos.filter(producto => producto.stock < producto.stockMinimo);
+
+    if (productosBajoStockMinimo.length > 0) {
+      const pedidoMinimoTexto = productosBajoStockMinimo.map(producto => `${producto.intId} - ${producto.stock}`).join('\n');
+
+      const docDefinition = {
+        content: [
+          { text: 'Pedido de productos con stock bajo el mínimo', style: 'header' },
+          { text: pedidoMinimoTexto, style: 'body' }
+        ],
+        styles: {
+          header: { fontSize: 18, bold: true, alignment: 'center', margin: [0, 0, 0, 10] },
+          body: { fontSize: 12, margin: [0, 0, 0, 10] }
+        }
+      };
+
+      pdfMake.createPdf(docDefinition).download('pedido_minimo.pdf');
+    } else {
+      Swal.fire({
+        icon: 'info',
+        title: 'No hay productos con stock bajo el mínimo',
+      });
+    }
+  }
+
+  async exportarStockProducto() {
+    const csvContent = this.convertToCSV(this.productos);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    saveAs(blob, 'stock_producto.csv');
+  }
+
+  private convertToCSV(data: any[]): string {
+    const header = Object.keys(data[0]).join(',') + '\n';
+    const rows = data.map(item => Object.values(item).join(','));
+
+    return header + rows.join('\n');
   }
 }
