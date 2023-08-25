@@ -1,0 +1,34 @@
+
+
+<body>
+  <main class="container">
+      <div class="contenedor">
+          <div class="form">
+              <div class="form_sec">
+                  <h2 class="form_name">ContabilidadSinRebu</h2>
+                  <div class="form_imput">
+                      <h2 class="form_title">Configuración de la cuenta</h2>
+                      <div class="group_input group_input_logic">
+                          <h3>Cambiar correo</h3>
+                          <form #form="ngForm">
+                          <input ngModel name="correoGmail" type="email" class="form_input" placeholder="Correo actual" required>
+                          <input ngModel name="contrasenaActual" type="password" class="form_input" placeholder="Contraseña actual" required>
+                          </form>
+                          <button mat-button [class.loading]="isLoading"  class="btn_primary" (click)="configurarGmail(form)">Configurar</button>
+                      </div>
+                      <div class="group_input group_input_logic">
+                          <h3>Cambiar Contraseña</h3>
+                          <form #form2="ngForm">
+                          <input ngModel name="contrasenaActual" type="password" class="form_input" placeholder="Contraseña actual" required>
+                          <input ngModel name="nuevaContrasena" type="password" class="form_input" placeholder="Nueva contraseña" required>
+                          <input ngModel name="repetirNuevaContrasena" type="password" class="form_input" placeholder="Repetir nueva contraseña" required>
+                        </form>
+                          <button mat-button [class.loading]="isLoading"  class="btn_primary" (click)="cambiarContrasena(form2)">Cambiar Contraseña</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </main>
+
+</body>

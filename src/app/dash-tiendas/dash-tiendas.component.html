@@ -4,7 +4,7 @@
       <h2 class="text_head" routerLink="/dash">Inventario</h2>
     </div>
     <div class="header_sub">
-      <h2 *ngIf="sessionData.userType == 1" class="text_head" >Administrador</h2>
+      <h2 *ngIf="sessionData.userType == 1" class="text_head">Administrador</h2>
       <div><button class="btn_primary btn_exit" (click)="cerrarSesion()">Salir</button></div>
     </div>
   </header>
@@ -12,7 +12,7 @@
     <div class="modal-agregar">
       <div class="modal-contenido-user">
         <label for="" class="id_user_num">2</label>
-        <h2>Nuevo Producto</h2>
+        <h2>Nueva Tienda</h2>
         <form id="addProductForm">
           <div class="form-group">
             <label for="Producto">Producto:</label>
@@ -53,38 +53,33 @@
     </div>
     <div class="container_menu">
       <div class="contenedor_table">
-        <h2>Lista de Productos</h2>
+        <h2>Lista de Tiendas</h2>
         <div class="container_menu_table">
           <div>
-            <button class="btn_primary btn_user btn_agregar" (click)="agregarProducto()">Nuevo Producto</button>
-            <button class="btn_primary btn_user btn_agregar export" (click)="exportarProductos()">Exportar Producto</button>
+            <button class="btn_primary btn_user btn_agregar" (click)="agregarTienda()">Nueva Tienda</button>
           </div>
           <div>
-            <input #box type="text" class="input_bus" placeholder="Buscar" (input)="buscarProductos(box.value)">
+            <input #box type="text" class="input_bus" placeholder="Buscar" (input)="buscarTiendas(box.value)">
           </div>
         </div>
         <table class="table">
           <thead class="thead-dark">
             <tr>
-              <th>Producto</th>
-              <th>Codigo</th>
-              <th>Categoria</th>
-              <th>Precio</th>
-              <th *ngIf="sessionData.userType == 1">Id de Tienda</th>
+              <th>Id Tienda</th>
+              <th>Tienda</th>
+              <th>Propietario</th>
               <th class="acc">Accion</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let producto of pageSlice">
-              <td class="id_user_num">{{ producto.idProducto }}</td>
-              <td>{{ producto.nombre }}</td>
-              <td>{{ producto.idProducto }}</td>
-              <td>{{ producto.categoria }}</td>
-              <td>{{ producto.precio }}</td>
-              <td *ngIf="sessionData.userType == 1">{{ producto.idTienda }}</td>
+            <tr *ngFor="let tienda of pageSlice">
+              <td class="id_user_num">{{ tienda.intId }}</td>
+              <td>{{ tienda.intId }}</td>
+              <td>{{ tienda.localidad }}</td>
+              <td>{{ tienda.idPropietario }}</td>
               <td class="btn_td acc">
-              <button class="btn_editar" (click)="editarProducto(producto)">Editar</button>
-              <button class="btn_eliminar" (click)="eliminarProducto(producto.idProducto)">Eliminar</button>
+              <button class="btn_editar" (click)="editarTiendas(tienda)">Editar</button>
+              <button class="btn_eliminar" (click)="eliminarTienda(tienda.intId)">Eliminar</button>
               </td>
             </tr>
             <mat-paginator [length]="this.productos.length" [pageSize]="10" (page)="Paginacion($event)"></mat-paginator>
@@ -92,7 +87,3 @@
 
         </table>
     </div>
-
-
-
-

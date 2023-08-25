@@ -1,10 +1,10 @@
 <body>
     <header class="header">
         <div>
-            <h2 class="text_head">Nombre del sistema</h2>
+            <h2 class="text_head" routerLink="/dash">Inventario</h2>
         </div>
         <div class="header_sub">
-            <h2 class="text_head">Administrador</h2>
+            <h2 *ngIf="sessionData.userType == 1" class="text_head" >Administrador</h2>
             <div><button class="btn_primary btn_exit" (click)="cerrarSesion()">Salir</button></div>
         </div>
     </header>
@@ -14,21 +14,21 @@
                 <h2>Stock de Productos</h2>
                 <div class="container_menu_table">
                     <div>
-                        <button class="btn_primary btn_user" id="print_pedido">Imprimir pedido</button>
-                        <button class="btn_primary btn_user export">Exportar stock de Producto</button>
+                        <button class="btn_primary btn_user" id="print_pedido" (click)="imprimirPedidoMinimo()">Imprimir pedido</button>
+                        <button class="btn_primary btn_user export" (click)="exportarStockProducto()">Exportar stock de Producto</button>
                     </div>
                     <div>
-                        <input type="text" class="input_bus" placeholder="Buscar">
+                        <input #box type="text" class="input_bus" placeholder="Buscar" (input)="buscarProducto(box.value)">
                     </div>
                 </div>
                 <table class="table">
                   <thead class="thead-dark">
                     <tr>
-                      <th>Producto(cambiar por el nombre)</th>
+                      <th>Producto</th>
                       <th>Codigo</th>
                       <th>Cantidad</th>
                       <th>Cantidad Minima</th>
-                      <th *ngIf="sessionData.userType==1">Id de Tienda(cambiar por el nombre)</th>
+                      <th *ngIf="sessionData.userType==1">Id de Tienda</th>
                       <th class="acc">Accion</th>
                     </tr>
                   </thead>

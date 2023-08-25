@@ -10,13 +10,19 @@ import { Router } from '@angular/router';
 })
 export class DashUserComponent implements OnInit {
   usuarios: any[] = []; // Variable para almacenar la lista de usuarios
+  pageSlice:any = this.usuarios.slice(0,10);
+  xproductos: any[] = [];
 
   constructor(private requestsService: RequestsService, private router:Router) { }
 
   ngOnInit(): void {
-    this.requestsService.checkSession();
+    try {
+      this.requestsService.checkSession();
     // Obtener la lista de usuarios al cargar el componente
     this.getUsuarios();
+    } catch (error) {
+
+    }
   }
 
   // Función para obtener la lista de usuarios desde el servicio
@@ -25,6 +31,10 @@ export class DashUserComponent implements OnInit {
       (data: any[]) => {
         // Almacenar la lista de usuarios en la variable 'usuarios'
         this.usuarios = data;
+        this.xproductos = this.usuarios;
+        this.pageSlice = this.xproductos.slice(0,10);
+        console.log(this.usuarios);
+
       },
       (error: any) => {
         console.error('Error al obtener la lista de usuarios:', error);
@@ -91,7 +101,7 @@ export class DashUserComponent implements OnInit {
           password: contraseña,
           correo: correo,
           userType: Number(permiso),
-          idTienda: Number(idTienda)
+          idTienda: Number(idTienda),
         }
       }
     }).then(async (result) => {
@@ -127,23 +137,24 @@ export class DashUserComponent implements OnInit {
   }
 
   // Función para eliminar un usuario
-  async eliminarUsuario(id: number) {
+  async eliminarUsuario(id: number,estado:number) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Estas seguro?',
+      text: `Se ${(estado == 1)?'desactivara':'activara'} la cuenta, desea continuar?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si!'
     }).then(async (result) => {
       if (result.isConfirmed) {
         (await this.requestsService.delete('Usuarios/' + id)).subscribe(
           (data: any) => {
             // Actualizar la lista de usuarios después de eliminar uno
             Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
+              `${(estado == 1)?'Desactivado':'Activado'}`,
+              `La cuenta fue ${(estado == 1)?'desactivada':'activada'}` ,
               'success'
             )
             this.getUsuarios();
@@ -211,7 +222,8 @@ export class DashUserComponent implements OnInit {
           password: user.password,
           correo: correo,
           userType: Number(permiso),
-          idTienda: Number(idTienda)
+          idTienda: Number(idTienda),
+          estado: user.estado
         }
       }
     }).then(async (result) => {
@@ -231,6 +243,18 @@ export class DashUserComponent implements OnInit {
     })
   }
 
+// busca los usuarios por nombre
+  buscarUsuarios(busqueda: string): void {
+    console.log(busqueda)
+    let resultados:any
+    resultados = this.usuarios.filter((val) =>
+      val && val.nombre && val.nombre.toLowerCase().includes(busqueda)
+    );
+    this.pageSlice = resultados.slice(0,10)
+    console.log(resultados)
+    console.log(this.pageSlice)
+  }
+
 
   getPermisoText(userType:any){
     switch(userType){
@@ -240,6 +264,7 @@ export class DashUserComponent implements OnInit {
       default: return "Error"
     }
   }
+
   cerrarSesion(){
     localStorage.clear();
     this.router.navigate([''])

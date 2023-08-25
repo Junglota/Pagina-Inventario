@@ -3,6 +3,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { RequestsService } from '../requests.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { saveAs } from 'file-saver';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-index-stock',
@@ -27,6 +31,7 @@ export class IndexStockComponent implements OnInit{
   }
 
   async cargarStock(){
+    console.log(this.endpoint);
     (await this.requestsService.get(this.endpoint)).subscribe(
       (data: any[]) => {
         // Almacenar la lista de usuarios en la variable 'usuarios'
@@ -42,6 +47,8 @@ export class IndexStockComponent implements OnInit{
   }
 
   editarStock(stock:any){
+    console.log(stock);
+
     Swal.fire({
       title: 'Editar inventario',
       html: `
@@ -60,11 +67,13 @@ export class IndexStockComponent implements OnInit{
       preConfirm: () => {
         //const nombre = Swal.getPopup()?.querySelector<any>('#nombre').value;
         const intId = stock.intId;
-        const idProducto = stock.idProducto;
+        const idProducto = stock.codigoProducto;
         const cantidad = Swal.getPopup()?.querySelector<any>('#stock').value;
         const stockMinimo = Swal.getPopup()?.querySelector<any>('#stockMinimo').value;
         const idTienda = stock.idTienda;
         if (/*!nombre ||*/ !idProducto|| !cantidad|| !stockMinimo || !idTienda) {
+          console.log(idProducto,cantidad,stockMinimo,idTienda);
+
           Swal.showValidationMessage(`Completa todos los campos`)
         }
         return {
@@ -133,8 +142,60 @@ export class IndexStockComponent implements OnInit{
     }
     this.pageSlice = this.xproductos.slice(index,endIndex);
   }
+
+  buscarProducto(busqueda: string): void {
+    console.log(busqueda)
+    let resultados:any
+    resultados = this.productos.filter((val) =>
+      val && val.nombreProducto && val.nombreProducto.toLowerCase().includes(busqueda)
+    );
+    this.pageSlice = resultados.slice(0,10)
+    console.log(resultados)
+    console.log(this.pageSlice)
+  }
+
+
   cerrarSesion(){
     localStorage.clear();
     this.router.navigate([''])
+  }
+
+  async imprimirPedidoMinimo() {
+    const productosBajoStockMinimo = this.productos.filter(producto => producto.stock < producto.stockMinimo);
+
+    if (productosBajoStockMinimo.length > 0) {
+      const pedidoMinimoTexto = productosBajoStockMinimo.map(producto => `${producto.intId} - ${producto.stock}`).join('\n');
+
+      const docDefinition = {
+        content: [
+          { text: 'Pedido de productos con stock bajo el mínimo', style: 'header' },
+          { text: pedidoMinimoTexto, style: 'body' }
+        ],
+        styles: {
+          header: { fontSize: 18, bold: true, alignment: 'center', margin: [0, 0, 0, 10] },
+          body: { fontSize: 12, margin: [0, 0, 0, 10] }
+        }
+      };
+
+      pdfMake.createPdf(docDefinition).download('pedido_minimo.pdf');
+    } else {
+      Swal.fire({
+        icon: 'info',
+        title: 'No hay productos con stock bajo el mínimo',
+      });
+    }
+  }
+
+  async exportarStockProducto() {
+    const csvContent = this.convertToCSV(this.productos);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    saveAs(blob, 'stock_producto.csv');
+  }
+
+  private convertToCSV(data: any[]): string {
+    const header = Object.keys(data[0]).join(',') + '\n';
+    const rows = data.map(item => Object.values(item).join(','));
+
+    return header + rows.join('\n');
   }
 }

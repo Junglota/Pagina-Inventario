@@ -17,6 +17,9 @@ import { DashMovimientosComponent } from './dash-movimientos/dash-movimientos.co
 import { DashUserProductComponent } from './dash-user-product/dash-user-product.component';
 import { IndexCategoriaComponent } from './index-categoria/index-categoria.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { DashTiendasComponent } from './dash-tiendas/dash-tiendas.component';
+import { RegistroComponent } from './registro/registro.component';
+import { DashConfiguracionComponent } from './dash-configuracion/dash-configuracion.component';
 
 
 const appRoutes: Routes = [
@@ -30,6 +33,9 @@ const appRoutes: Routes = [
   {path: 'usuarioproducto',component:DashUserProductComponent},
   {path: 'categoria',component:IndexCategoriaComponent},
   {path: 'olvidado',component:ForgotPasswordComponent},
+  {path: 'tiendas',component:DashTiendasComponent},
+  {path: 'registro',component:RegistroComponent},
+  {path: 'configuracion',component:DashConfiguracionComponent},
 ]
 
 @NgModule({
@@ -45,7 +51,10 @@ const appRoutes: Routes = [
     DashUserProductComponent,
     IndexCategoriaComponent,
     DashMovimientosComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    DashTiendasComponent,
+    RegistroComponent,
+    DashConfiguracionComponent
   ],
   imports: [
     BrowserModule,

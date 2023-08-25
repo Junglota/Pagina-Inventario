@@ -1,0 +1,29 @@
+
+<body>
+    <main class="container">
+        <div class="contenedor">
+            <div class="form">
+                <div class="form_sec">
+                    <h2 class="form_name">ContabilidadSinRebu</h2>
+                    <div class="form_imput">
+                        <h2 class="form_title">Registro de Usuario</h2>
+                        <div class="group_input group_imput_logic">
+                          <form #form="ngForm">
+                            <input ngModel name="nombre" type="text"  class="form_input" placeholder="Nombre" >
+                            <input ngModel name="apellido" type="text"  class="form_input" placeholder="Apellido" >
+                            <input ngModel name="usuario" type="text"  class="form_input" placeholder="Usuario" >
+                            <input ngModel name="correo" type="email"  class="form_input" placeholder="Correo" >
+                            <input ngModel name="localidad" type="text"  class="form_input" placeholder="Nombre de tu negocio" >
+                            <input ngModel name="password" type="password"  class="form_input" placeholder="Contraseña" >
+                            <input ngModel name="retrypassword" type="password"  class="form_input" placeholder="Repite tu contraseña" >
+                            </form>
+                        </div>
+                        <div class="btn">
+                            <button mat-button [class.loading]="isLoading" (click)="registro(form)" type="submit" class="btn_primary" id="start">Registrarse</button>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>

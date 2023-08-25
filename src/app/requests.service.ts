@@ -18,6 +18,10 @@ export class RequestsService {
 
     return await this.http.post<any>(`${this.url}${endpoint}`,body)
   }
+  async signup(body:any,endpoint:string){
+
+    return await this.http.post<any>(`${this.url}${endpoint}`,body)
+  }
 
 
   async get(endpoint:string){
@@ -30,6 +34,11 @@ export class RequestsService {
     return await this.http.post<any>(`${this.url}${endpoint}`,data,{headers: new HttpHeaders({
       'Authorization': `Bearer ${this.getJWT()}`
     })})
+  }
+  async postNoAuth(endpoint:string,data:any){
+    console.log("postnoauth");
+
+    return await this.http.post<any>(`${this.url}${endpoint}`,data)
   }
   async put(endpoint:string,data:any){
     console.log(data)

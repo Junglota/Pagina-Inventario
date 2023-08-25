@@ -1,7 +1,7 @@
 <body>
     <header class="header">
       <div>
-        <h2 class="text_head" routerLink="">Inventario</h2>
+        <h2 class="text_head" routerLink="/dash">Inventario</h2>
       </div>
       <div class="header_sub">
         <h2 class="text_head">Administrador</h2>
@@ -64,7 +64,7 @@
               <button class="btn_primary btn_user btn_agregar export">Exportar usuarios</button>
             </div>
             <div>
-              <input type="text" class="input_bus" placeholder="Buscar">
+              <input #box type="text" class="input_bus" placeholder="Buscar" (input)="buscarUsuarios(box.value)">
             </div>
           </div>
           <div class="menu_tabla">
@@ -77,7 +77,7 @@
             <a href="#" class="acc">Acción</a>
           </div>
           <div class="table">
-            <div *ngFor="let user of usuarios; let i = index" class="list_table">
+            <div *ngFor="let user of pageSlice; let i = index" class="list_table">
                 <label class="id_user_num">{{ user.id }}</label>
                 <label>{{ user.nombre }}</label>
                 <label>{{ user.apellido }}</label>
@@ -86,7 +86,10 @@
                 <label>{{ getPermisoText(user.userType) }}</label>
                 <div class="btn_td acc">
                   <button class="btn_editar" (click)="editarUsuario(user)">Editar</button>
-                  <button class="btn_eliminar" (click)="eliminarUsuario(user.intId)">Eliminar</button>
+                  <button [class]="user.estado == 2 ? 'btn_eliminar_special' : 'btn_eliminar'"
+                    (click)="eliminarUsuario(user.intId,user.estado)">
+                    {{ user.estado == 2 ? 'Reactivar' : 'Desactivar' }}
+                  </button>
                 </div>
             </div>
           </div>

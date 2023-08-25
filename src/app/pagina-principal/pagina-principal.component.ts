@@ -17,12 +17,13 @@ export class PaginaPrincipalComponent{
   endpoint:string = "Login"
 
   Name:any="";
+  isLoading = false;
 
   constructor(private request:RequestsService,private Router:Router){}
 
 
   async login(form:NgForm){
-
+    this.isLoading = true;
     const body={
       username:`${form.value.user}`,
       password:`${form.value.password}`
@@ -30,7 +31,7 @@ export class PaginaPrincipalComponent{
 
     (await this.request.login(body,this.endpoint)).subscribe(response =>{
       if ( response.jwtToken) {
-
+        this.isLoading=false;
         Swal.fire({
           toast: true,
         position: 'top',
@@ -50,7 +51,9 @@ export class PaginaPrincipalComponent{
           //-------------------------------------------------------
           this.Router.navigate(['/dash'])
       }
-      else{
+    },
+    (error =>{
+      this.isLoading = false;
         console.log("incorrecto")
         Swal.fire({
           toast: true,
@@ -61,7 +64,6 @@ export class PaginaPrincipalComponent{
         timer: 5000,
         title: 'Usuario o contraseña incorrectos'
         })
-      }
-    });
+    }));
   }
 }
